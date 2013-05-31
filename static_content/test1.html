@@ -1,0 +1,78 @@
+<html>
+<head>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="js/director.js"></script>
+
+</head>
+
+<body>
+
+<button id="one">Delete</button>
+<button id="runTest">Run Tests</button>
+
+
+<div id="deleteme">
+delete me!
+</div>
+
+<div id="results" style="color: red" >
+
+</div>
+
+<script type="text/javascript">
+
+var msgBodyIsRight = false;
+var shouldNotSee = false;
+
+function deleteHandle(msgBody, deleteSelector) {
+	$(deleteSelector).remove();
+}
+
+function showMsgBody(msgBody, deleteSelector) {
+	if(msgBody == 'the body') {
+		msgBodyIsRight = true;
+	}
+
+}
+
+function showNeverSeeMsg(msgBody) {
+	shouldNotSee = true;
+}
+
+router = Router();
+
+router.reg('/delete/(.*)', deleteHandle);
+router.reg('/delete/(.*)', showMsgBody);
+router.reg('/hello', showNeverSeeMsg);
+
+$('#one').on('click', function() {
+	router.notify('/delete/#deleteme', 'the body');
+});
+
+$('#runTest').on('click', function() {
+	runTests();
+});
+
+
+
+function runTests() {
+	router.notify('/delete/#deleteme', 'the body');
+	
+	if($('#deleteme').length > 0) {
+		$('#results').append('The delete box still exists');
+	}
+	
+	if(!msgBodyIsRight) {
+		$('#results').append('The msg body did not come through');
+	}
+	
+	if(shouldNotSee) {
+		$('#results').append('A handler that should not have gotten called got called.');
+	}
+	
+	$('#results').after('Test is done');
+}
+</script>
+</body>
+
+</html>

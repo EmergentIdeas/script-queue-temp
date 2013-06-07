@@ -1,13 +1,3 @@
-
-
-//
-// Generated on Sun Dec 16 2012 22:47:05 GMT-0500 (EST) by Nodejitsu, Inc (Using Codesurgeon).
-// Version 1.1.9
-//
-
-(function (exports) {
-
-
 /*
  * browser.js: Browser specific functionality for director.
  *
@@ -178,7 +168,7 @@ var listener = {
   onHashChanged: function () {}
 };
 
-var Router = exports.Router = function (routes) {
+var Router = function (routes) {
   if (!(this instanceof Router)) return new Router(routes);
 
   this.params   = {};
@@ -740,5 +730,6 @@ Router.prototype.mount = function(routes, path) {
 };
 
 
-
-}(typeof exports === "object" ? exports : window));
+var router = Router();
+$.fn.reg = router.reg;
+$.fn.notify = router.notify;

@@ -39,14 +39,12 @@ function showNeverSeeMsg(msgBody) {
 	shouldNotSee = true;
 }
 
-router = Router();
-
-router.reg('/delete/(.*)', deleteHandle);
-router.reg('/delete/(.*)', showMsgBody);
-router.reg('/hello', showNeverSeeMsg);
+$('body').reg('/delete/(.*)', deleteHandle);
+$('body').reg('/delete/(.*)', showMsgBody);
+$('body').reg('/hello', showNeverSeeMsg);
 
 $('#one').on('click', function() {
-	router.notify('/delete/#deleteme', 'the body');
+	$('body').notify('/delete/#deleteme', 'the body');
 });
 
 $('#runTest').on('click', function() {
@@ -56,7 +54,7 @@ $('#runTest').on('click', function() {
 
 
 function runTests() {
-	router.notify('/delete/#deleteme', 'the body');
+	$('body').notify('/delete/#deleteme', 'the body');
 	
 	if($('#deleteme').length > 0) {
 		$('#results').append('The delete box still exists');
